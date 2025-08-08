@@ -23,9 +23,9 @@ class HomePage extends StatelessWidget {
   // Novo gradiente radial prateado para o texto
   final RadialGradient silverTextGradient = const RadialGradient(
     center: Alignment.center,
-    radius: 0.7, // Ajuste o raio para controlar a dispersão do gradiente
+    radius: 1.5, // Ajuste o raio para controlar a dispersão do gradiente
     colors: [
-      Color.fromARGB(255, 194, 193, 193), // Cinza mais claro
+      Color.fromARGB(255, 177, 175, 175), // Cinza mais claro
       Colors.white,           // Branco para o brilho
       Colors.grey, // Cinza um pouco mais escuro
     ],
@@ -43,7 +43,7 @@ Widget build(BuildContext context) {
         child: Column(
           children: [
             _buildAppBar(),
-            const SizedBox(height: 20), // Espaço entre o app bar e o conteúdo
+            const SizedBox(height: 0), // Espaço entre o app bar e o conteúdo
              // Adicionando o widget Text com o ShaderMask para o gradiente
             ShaderMask(
               shaderCallback: (Rect bounds) {
@@ -52,11 +52,12 @@ Widget build(BuildContext context) {
               child: const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                 child: Text(
-                  'TEXTO AQUI',
+                  'RF ToolTec',
                   textAlign: TextAlign.center,
                   style: TextStyle(
+                    fontFamily: 'Inria Sans', // Use o nome da família de fontes aqui
                     color: Colors.white, // A cor base precisa ser sólida
-                    fontSize: 24,
+                    fontSize: 45,
                     fontWeight: FontWeight.bold,
                     shadows: [
                       Shadow(
@@ -179,13 +180,12 @@ Widget build(BuildContext context) {
               childAspectRatio: 1.18, // Altura dos Botões de categoria
               children: [
                 _buildButtonCard(
-                  Icons.electrical_services,
-                  'Elétrica',
-                  Colors.amber,
+                  'assets/images/Raio.png',
+                  'Elétrica'
                 ),
-                _buildButtonCard(Icons.build, 'Mecânica', Colors.amber),
-                _buildButtonCard(Icons.computer, 'TI', Colors.amber),
-                _buildButtonCard(Icons.settings, 'Outras', Colors.grey),
+                _buildButtonCard('assets/images/Chave.png', 'Mecânica'),
+                _buildButtonCard('assets/images/computador.png', 'TI'),
+                _buildButtonCard('assets/images/Outros.png', 'Outras'),
               ],
             ),
           ),
@@ -197,7 +197,7 @@ Widget build(BuildContext context) {
   }
 
   // Widget para cada botão de categoria com gradiente
-  Widget _buildButtonCard(IconData icon, String title, Color color) {
+  Widget _buildButtonCard(String imagePath, String title) {
     return Container(
       decoration: BoxDecoration(
         gradient: const LinearGradient(
@@ -236,7 +236,7 @@ Widget build(BuildContext context) {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 60, color: color),
+              Image.asset(imagePath, width: 60, height: 60), // Substitui o Icon
               const SizedBox(height: 10),
               Text(
                 title,
@@ -329,22 +329,23 @@ Widget build(BuildContext context) {
 
  
 // Widget para a barra de navegação inferior
-PreferredSizeWidget _buildBottomNavigationBar() {
-  return PreferredSize(
-    preferredSize: const Size.fromHeight(90), // Altura exata da barra inferior
+// Substitua o código completo da função _buildBottomNavigationBar
+// Widget para a barra de navegação inferior
+Widget _buildBottomNavigationBar() {
+  return ClipRRect(
+    borderRadius: const BorderRadius.only(
+      topLeft: Radius.circular(20),
+      topRight: Radius.circular(20),
+    ),
     child: Container(
       height: 90,
       decoration: BoxDecoration(
         gradient: darkGreenGradient,
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
-        ),
         boxShadow: const [
           BoxShadow(
             color: Colors.black26,
             blurRadius: 10,
-            offset: Offset(0, -5), // Sombra para cima
+            offset: Offset(0, -5),
           ),
         ],
       ),
@@ -353,35 +354,45 @@ PreferredSizeWidget _buildBottomNavigationBar() {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _buildBottomNavItem(Icons.settings, 'Configurações'),
-            _buildBottomNavItem(Icons.folder, 'Arquivo'),
-            _buildBottomNavItem(Icons.assignment, 'OS'),
-            _buildBottomNavItem(Icons.calendar_month, 'Agenda'),
+            _buildBottomNavItem('assets/images/configuracoes.png', 'Configurações'),
+            _buildBottomNavItem('assets/images/arquivos.png', 'Arquivo'),
+            _buildBottomNavItem('assets/images/OS.png','OS'),
+            _buildBottomNavItem('assets/images/agenda.png', 'Agenda'),
           ],
         ),
       ),
     ),
   );
 }
-  // Widget para cada item da barra de navegação inferior
-  Widget _buildBottomNavItem(IconData icon, String label) {
-    return InkWell(
+
+// Widget para cada item da barra de navegação inferior
+Widget _buildBottomNavItem(String imagePath, String label) {
+  return Material(
+    color: Colors.transparent, // Torna o material transparente
+    child: InkWell(
       onTap: () {},
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, color: Colors.white, size: 30),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
+      splashColor: Colors.white24, // Efeito de onda branco e sutil
+      highlightColor: Colors.white12, // Cor de destaque ao segurar o botão
+      child: Padding( // Adicionei um Padding para um toque mais confortável
+        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(imagePath, width: 30, height: 30),
+            const SizedBox(height: 4),
+            Text(
+              label,
+              style: const TextStyle(
+                fontFamily: 'Inria Sans',
+                color: Colors.white,
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    );
-  }
+    ),
+  );
+}
 }
