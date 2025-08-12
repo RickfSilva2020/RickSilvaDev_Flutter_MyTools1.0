@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:my_tools/secao_condutores_page.dart';
-import 'package:my_tools/disjuntores_page.dart';
-import 'package:my_tools/contatores_page.dart';
-import 'package:my_tools/queda_tensao_page.dart';
-import 'package:my_tools/ohm_law_page.dart';
-import 'package:my_tools/resistor_page.dart';
+import 'package:my_tools/elet_secao_condutores_page.dart';
+import 'package:my_tools/elet_disjuntores_page.dart';
+import 'package:my_tools/elet_contatores_page.dart';
+import 'package:my_tools/elet_queda_tensao_page.dart';
+import 'package:my_tools/elet_ohm_law_page.dart';
+import 'package:my_tools/elet_resistor_page.dart';
 
 class EletricaPage extends StatefulWidget {
   const EletricaPage({super.key});
@@ -56,14 +56,36 @@ class _EletricaPageState extends State<EletricaPage> {
       {'image': 'assets/images/resistor.png', 'title': 'Resistores'},
     ],
     'Motores': [
-      {'image': 'assets/images/favoritos.png', 'title': 'Conversão de Tensão'},
+      {'image': 'assets/images/mot_corrente.png', 'title': 'Corrente do Motor'},
+      {'image': 'assets/images/mot_potencia.png', 'title': 'Potência do Motor'},
       {
-        'image': 'assets/images/favoritos.png',
-        'title': 'Conversão de Potência',
+        'image': 'assets/images/mot_frequencia.png',
+        'title': 'Frequência do Motor',
+      },
+      {'image': 'assets/images/mot_tensao.png', 'title': 'Tensão do Motor'},
+      {
+        'image': 'assets/images/mot_fatpotencia.png',
+        'title': 'Fator de Potência do Motor',
       },
       {
-        'image': 'assets/images/favoritos.png',
-        'title': 'Conversão de Frequência',
+        'image': 'assets/images/mot_eficiencia.png',
+        'title': 'Eficiência do Motor',
+      },
+      {
+        'image': 'assets/images/mot_tripmono.png',
+        'title': 'Motor Trifásico para Monofásico',
+      },
+      {
+        'image': 'assets/images/mot_capacitor.png',
+        'title': 'Capacitor para motor Monofásico',
+      },
+      {
+        'image': 'assets/images/mot_diagmono.png',
+        'title': 'Diagrama para motor Monofásico',
+      },
+      {
+        'image': 'assets/images/mot_diagtri.png',
+        'title': 'Diagrama para motor Trifásico',
       },
     ],
     'Conversões': [
