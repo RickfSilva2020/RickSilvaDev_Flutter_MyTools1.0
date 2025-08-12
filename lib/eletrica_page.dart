@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_tools/secao_condutores_page.dart';
 import 'package:my_tools/disjuntores_page.dart';
+import 'package:my_tools/contatores_page.dart';
+import 'package:my_tools/queda_tensao_page.dart';
+import 'package:my_tools/ohm_law_page.dart';
+import 'package:my_tools/resistor_page.dart';
 
 class EletricaPage extends StatefulWidget {
   const EletricaPage({super.key});
@@ -48,10 +52,7 @@ class _EletricaPageState extends State<EletricaPage> {
         'image': 'assets/images/corrente.png',
         'title': 'Cálculo Corrente, Tensão e Res.',
       },
-      {
-        'image': 'assets/images/potencia.png',
-        'title': 'Cálculo de Fator de Potência',
-      },
+
       {'image': 'assets/images/resistor.png', 'title': 'Resistores'},
     ],
     'Motores': [
@@ -276,6 +277,28 @@ class _EletricaPageState extends State<EletricaPage> {
                 MaterialPageRoute(
                   builder: (context) => const DisjuntoresPage(),
                 ),
+              );
+            } else if (title == 'Cálculo de Contatores') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ContatoresPage()),
+              );
+            } else if (title == 'Cálculo de queda de tensão') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const QuedaTensaoPage(),
+                ),
+              );
+            } else if (title == 'Cálculo Corrente, Tensão e Res.') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const OhmLawPage()),
+              );
+            } else if (title == 'Resistores') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ResistorPage()),
               );
             }
           },
