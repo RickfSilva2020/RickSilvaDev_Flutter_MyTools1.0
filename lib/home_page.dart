@@ -286,6 +286,8 @@ class HomePage extends StatelessWidget {
   }
 
   // Widget para o card da Biblioteca Técnica com gradiente
+  // Substitua o código completo da função _buildLibraryCard
+  // Widget para o card da Biblioteca Técnica com gradiente
   Widget _buildLibraryCard() {
     return Container(
       decoration: BoxDecoration(
@@ -325,7 +327,11 @@ class HomePage extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: Row(
               children: [
-                const Icon(Icons.menu_book, size: 70, color: Colors.brown),
+                Image.asset(
+                  'assets/images/biblioteca.png', // Substitui o Icon
+                  width: 70, // Ajusta a largura
+                  height: 70, // Ajusta a altura
+                ),
                 const SizedBox(width: 20),
                 const Expanded(
                   child: Text(
