@@ -286,8 +286,6 @@ class HomePage extends StatelessWidget {
   }
 
   // Widget para o card da Biblioteca Técnica com gradiente
-  // Substitua o código completo da função _buildLibraryCard
-  // Widget para o card da Biblioteca Técnica com gradiente
   Widget _buildLibraryCard() {
     return Container(
       decoration: BoxDecoration(
