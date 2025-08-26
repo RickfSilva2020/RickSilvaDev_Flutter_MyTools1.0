@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
 
 class ResistorPage extends StatefulWidget {
   const ResistorPage({super.key});
@@ -17,6 +16,15 @@ class _ResistorPageState extends State<ResistorPage> {
       Color.fromARGB(255, 38, 43, 38),
     ],
     stops: [0.0, 1.0],
+  );
+
+  final LinearGradient darkGreenGradient = const LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [
+      Color.fromARGB(255, 158, 180, 158),
+      Color.fromARGB(255, 38, 43, 38),
+    ],
   );
 
   // Dados do código de cores de resistor (expandido para 5 e 6 bandas)
@@ -184,10 +192,11 @@ class _ResistorPageState extends State<ResistorPage> {
               .toDouble();
       multiplier = (band4Data['multiplier'] as num).toDouble();
       tolerance = (band5Data['tolerance'] as num?)?.toDouble();
-      tempCoefficientPPM = band6Data?['tempCoefficient'];
+      tempCoefficientPPM = band6Data['tempCoefficient'];
     }
 
-    final double resistencia = valor * (multiplier ?? 1.0);
+    // >>> Alteração: Remove o operador ??
+    final double resistencia = valor * multiplier;
 
     setState(() {
       _resistencia = '${resistencia.toStringAsFixed(0)} Ω';
@@ -253,7 +262,6 @@ class _ResistorPageState extends State<ResistorPage> {
                   onChanged: (newValue) {
                     setState(() {
                       _numberOfBands = newValue!;
-                      // Redefine as bandas adicionais para um valor padrão
                       _band5 = newValue >= 5 ? 'Marrom' : null;
                       _band6 = newValue == 6 ? 'Marrom' : null;
                       _calcularResistencia();
@@ -291,7 +299,6 @@ class _ResistorPageState extends State<ResistorPage> {
                     });
                   },
                 ),
-                // Banda 3 se torna Dígito para 5 e 6 bandas
                 _buildBandDropdown(
                   label:
                       'Banda 3 (${_numberOfBands >= 5 ? 'Dígito' : 'Multiplicador'})',
@@ -309,7 +316,6 @@ class _ResistorPageState extends State<ResistorPage> {
                     });
                   },
                 ),
-                // Banda 4 se torna Multiplicador para 5 e 6 bandas
                 _buildBandDropdown(
                   label:
                       'Banda 4 (${_numberOfBands <= 4 ? 'Tolerância' : 'Multiplicador'})',
@@ -369,15 +375,92 @@ class _ResistorPageState extends State<ResistorPage> {
   }
 
   Widget _buildResistorVisual() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      child: Image.asset(
-        'assets/images/Resistor.png', // Substitua pelo caminho correto da sua imagem
-        fit: BoxFit.contain, // Ajusta a imagem dentro do container
-      ),
+    // Lista para armazenar as cores das bandas ativas
+    List<Color> activeBandsColors = [];
+
+    // Posições e larguras aproximadas das faixas na imagem do resistor (ajuste conforme sua imagem)
+    // Estes valores são EXTREMAMENTE dependentes da sua imagem de base.
+    // Você precisará experimentar com `left` e `width` para que as faixas se encaixem perfeitamente.
+    List<Map<String, double>> bandPositions = [];
+
+    if (_numberOfBands == 4) {
+      bandPositions = [
+        {'left': 0.28, 'width': 0.05}, // Banda 1
+        {'left': 0.35, 'width': 0.05}, // Banda 2
+        {'left': 0.42, 'width': 0.05}, // Multiplicador (Banda 3)
+        {'left': 0.65, 'width': 0.05}, // Tolerância (Banda 4)
+      ];
+    } else if (_numberOfBands == 5) {
+      bandPositions = [
+        {'left': 0.28, 'width': 0.05}, // Banda 1
+        {'left': 0.35, 'width': 0.05}, // Banda 2
+        {'left': 0.42, 'width': 0.05}, // Banda 3
+        {'left': 0.49, 'width': 0.05}, // Multiplicador (Banda 4)
+        {'left': 0.68, 'width': 0.05}, // Tolerância (Banda 5)
+      ];
+    } else {
+      // 6 bandas
+      bandPositions = [
+        {'left': 0.25, 'width': 0.04}, // Banda 1
+        {'left': 0.31, 'width': 0.04}, // Banda 2
+        {'left': 0.37, 'width': 0.04}, // Banda 3
+        {'left': 0.43, 'width': 0.04}, // Multiplicador (Banda 4)
+        {'left': 0.58, 'width': 0.04}, // Tolerância (Banda 5)
+        {'left': 0.64, 'width': 0.04}, // Coeficiente de Temperatura (Banda 6)
+      ];
+    }
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        double resistorWidth =
+            constraints.maxWidth; // Largura total disponível para o resistor
+        double resistorHeight =
+            resistorWidth * (0.8); // Ajuste a proporção da sua imagem
+
+        return Container(
+          height:
+              resistorHeight +
+              10, // Altura para o resistor + um pouco de margem
+          alignment: Alignment.center,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              // Imagem de base do resistor
+              Image.asset(
+                'assets/images/Resistor.png', // Substitua pelo caminho da sua imagem PNG de base
+                width: resistorWidth,
+                height: resistorHeight,
+                fit: BoxFit.fill, // A imagem preencherá a área definida
+              ),
+              // Desenhar as faixas coloridas sobre a imagem
+              ...List.generate(activeBandsColors.length, (index) {
+                // Ajuste para não tentar acessar um índice que não existe em bandPositions
+                if (index >= bandPositions.length)
+                  return const SizedBox.shrink();
+
+                double bandLeft = resistorWidth * bandPositions[index]['left']!;
+                double bandWidth =
+                    resistorWidth * bandPositions[index]['width']!;
+
+                return Positioned(
+                  left: bandLeft,
+                  child: Container(
+                    width: bandWidth,
+                    height:
+                        resistorHeight *
+                        0.7, // Altura da faixa (70% da altura do resistor)
+                    color: activeBandsColors[index],
+                  ),
+                );
+              }),
+            ],
+          ),
+        );
+      },
     );
   }
 
+  /*
   Widget _buildBand(Color color) {
     return Container(
       width: 12,
@@ -389,7 +472,7 @@ class _ResistorPageState extends State<ResistorPage> {
       ),
     );
   }
-
+*/
   Widget _buildBandDropdown({
     required String label,
     required String? value,

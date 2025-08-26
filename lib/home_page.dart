@@ -42,7 +42,7 @@ class HomePage extends StatelessWidget {
           child: Column(
             children: [
               _buildAppBar(),
-              const SizedBox(height: 0), // Espaço entre o app bar e o conteúdo
+              const SizedBox(height: 10), // Espaço entre o app bar e o conteúdo
               // Adicionando o widget Text com o ShaderMask para o gradiente
               ShaderMask(
                 shaderCallback: (Rect bounds) {
@@ -61,7 +61,7 @@ class HomePage extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       shadows: [
                         Shadow(
-                          offset: Offset(1.0, 1.0),
+                          offset: Offset(1.0, 5.0),
                           blurRadius: 2.0,
                           color: Colors.black,
                         ),
@@ -183,12 +183,12 @@ class HomePage extends StatelessWidget {
       child: Column(
         children: [
           Expanded(
-            flex: 5, // 5 partes do total
+            flex: 7, // 7 partes do total
             child: GridView.count(
               crossAxisCount: 2, // 2 colunas
               mainAxisSpacing: 15,
               crossAxisSpacing: 25,
-              childAspectRatio: 1.18, // Altura dos Botões de categoria
+              childAspectRatio: 1.40, // Altura dos Botões de categoria
               children: [
                 _buildButtonCard(context, 'assets/images/Raio.png', 'Elétrica'),
                 _buildButtonCard(
@@ -245,9 +245,12 @@ class HomePage extends StatelessWidget {
             .transparent, // Torna o material transparente para mostrar o gradiente
         borderRadius: BorderRadius.circular(15),
         child: InkWell(
-          onTap: () {
+          onTap: () async {
             // Lógica de navegação
             if (title == 'Elétrica') {
+              await Future.delayed(
+                const Duration(milliseconds: 150),
+              ); // Adiciona um atraso de 250ms
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const EletricaPage()),
@@ -356,8 +359,6 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  // Widget para a barra de navegação inferior
-  // Substitua o código completo da função _buildBottomNavigationBar
   // Widget para a barra de navegação inferior
   Widget _buildBottomNavigationBar() {
     return ClipRRect(

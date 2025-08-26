@@ -96,6 +96,10 @@ class _EletricaPageState extends State<EletricaPage> {
       {'image': 'assets/images/favoritos.png', 'title': 'Normas Técnicas'},
       {'image': 'assets/images/favoritos.png', 'title': 'Símbolos Elétricos'},
     ],
+    'Favoritos': [
+      {'image': 'assets/images/favoritos.png', 'title': 'Normas Técnicas'},
+      {'image': 'assets/images/favoritos.png', 'title': 'Símbolos Elétricos'},
+    ],
   };
 
   @override
@@ -176,10 +180,6 @@ class _EletricaPageState extends State<EletricaPage> {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       decoration: BoxDecoration(
         gradient: darkGreenGradient,
-        borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(20),
-          bottomRight: Radius.circular(20),
-        ),
         boxShadow: const [
           BoxShadow(
             color: Colors.black26,
@@ -188,14 +188,18 @@ class _EletricaPageState extends State<EletricaPage> {
           ),
         ],
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          _buildTab('Geral'),
-          _buildTab('Motores'),
-          _buildTab('Conversões'),
-          _buildTab('Recursos'),
-        ],
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal, // Habilita a rolagem horizontal
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            _buildTab('Geral'),
+            _buildTab('Motores'),
+            _buildTab('Conversões'),
+            _buildTab('Recursos'),
+            _buildTab('Favoritos'), // Nova aba
+          ],
+        ),
       ),
     );
   }
@@ -284,9 +288,10 @@ class _EletricaPageState extends State<EletricaPage> {
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(25),
         child: InkWell(
-          onTap: () {
+          onTap: () async {
             // Lógica para o clique no botão da ferramenta
             if (title == 'Cálculo de Seção de Fios') {
+              await Future.delayed(const Duration(milliseconds: 150));
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -294,6 +299,7 @@ class _EletricaPageState extends State<EletricaPage> {
                 ),
               );
             } else if (title == 'Cálculo de Disjuntores') {
+              await Future.delayed(const Duration(milliseconds: 150));
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -301,11 +307,13 @@ class _EletricaPageState extends State<EletricaPage> {
                 ),
               );
             } else if (title == 'Cálculo de Contatores') {
+              await Future.delayed(const Duration(milliseconds: 150));
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const ContatoresPage()),
               );
             } else if (title == 'Cálculo de queda de tensão') {
+              await Future.delayed(const Duration(milliseconds: 150));
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -313,11 +321,13 @@ class _EletricaPageState extends State<EletricaPage> {
                 ),
               );
             } else if (title == 'Cálculo Corrente, Tensão e Res.') {
+              await Future.delayed(const Duration(milliseconds: 150));
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const OhmLawPage()),
               );
             } else if (title == 'Resistores') {
+              await Future.delayed(const Duration(milliseconds: 150));
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const ResistorPage()),
