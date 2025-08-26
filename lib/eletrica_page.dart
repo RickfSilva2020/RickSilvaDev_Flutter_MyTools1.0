@@ -5,6 +5,9 @@ import 'package:my_tools/elet_contatores_page.dart';
 import 'package:my_tools/elet_queda_tensao_page.dart';
 import 'package:my_tools/elet_ohm_law_page.dart';
 import 'package:my_tools/elet_resistor_page.dart';
+import 'package:my_tools/mot_corrente_motor_page.dart';
+import 'package:my_tools/mot_potencia_motor_page.dart';
+import 'package:my_tools/mot_frequencia_motor_page.dart';
 
 class EletricaPage extends StatefulWidget {
   const EletricaPage({super.key});
@@ -96,10 +99,7 @@ class _EletricaPageState extends State<EletricaPage> {
       {'image': 'assets/images/favoritos.png', 'title': 'Normas Técnicas'},
       {'image': 'assets/images/favoritos.png', 'title': 'Símbolos Elétricos'},
     ],
-    'Favoritos': [
-      {'image': 'assets/images/favoritos.png', 'title': 'Normas Técnicas'},
-      {'image': 'assets/images/favoritos.png', 'title': 'Símbolos Elétricos'},
-    ],
+    'Favoritos': [],
   };
 
   @override
@@ -289,7 +289,7 @@ class _EletricaPageState extends State<EletricaPage> {
         borderRadius: BorderRadius.circular(25),
         child: InkWell(
           onTap: () async {
-            // Lógica para o clique no botão da ferramenta
+            // Lógica para o clique no botão da Aba Geral
             if (title == 'Cálculo de Seção de Fios') {
               await Future.delayed(const Duration(milliseconds: 150));
               Navigator.push(
@@ -331,6 +331,31 @@ class _EletricaPageState extends State<EletricaPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const ResistorPage()),
+              );
+              // Lógica para o clique no botão da Aba Motores
+            } else if (title == 'Corrente do Motor') {
+              await Future.delayed(const Duration(milliseconds: 150));
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const CorrenteMotorPage(),
+                ),
+              );
+            } else if (title == 'Potência do Motor') {
+              await Future.delayed(const Duration(milliseconds: 150));
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const PotenciaMotorPage(),
+                ),
+              );
+            } else if (title == 'Frequência do Motor') {
+              await Future.delayed(const Duration(milliseconds: 150));
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const FrequenciaMotorPage(),
+                ),
               );
             }
           },
