@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_tools/eletrica_page.dart';
+import 'package:my_tools/ti_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -255,8 +256,13 @@ class HomePage extends StatelessWidget {
                 context,
                 MaterialPageRoute(builder: (context) => const EletricaPage()),
               );
+            } else if (title == 'TI') {
+              await Future.delayed(const Duration(milliseconds: 150));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const TiPage()),
+              );
             }
-            // Outras lógicas de navegação para os outros botões
           },
           borderRadius: BorderRadius.circular(15),
           splashColor: Colors.white24,

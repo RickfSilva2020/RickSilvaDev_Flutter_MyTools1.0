@@ -202,7 +202,7 @@ class _ResistorPageState extends State<ResistorPage> {
       _resistencia = '${resistencia.toStringAsFixed(0)} Ω';
       _tolerancia = tolerance != null ? '±$tolerance%' : '±?%';
       _tempCoefficient = tempCoefficientPPM != null
-          ? ' - ${tempCoefficientPPM} PPM/°C'
+          ? ' - $tempCoefficientPPM PPM/°C'
           : '';
     });
   }
@@ -435,8 +435,9 @@ class _ResistorPageState extends State<ResistorPage> {
               // Desenhar as faixas coloridas sobre a imagem
               ...List.generate(activeBandsColors.length, (index) {
                 // Ajuste para não tentar acessar um índice que não existe em bandPositions
-                if (index >= bandPositions.length)
+                if (index >= bandPositions.length) {
                   return const SizedBox.shrink();
+                }
 
                 double bandLeft = resistorWidth * bandPositions[index]['left']!;
                 double bandWidth =
